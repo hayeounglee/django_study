@@ -11,22 +11,20 @@ def index(request):
   global topics
   ol = ''
   for topic in topics:
-    ol += f'<li>{topic}</li>'
-  return HttpResponse('''
+    ol += f'<li><a href="/read/{topic["id"]}">{topic["title"]}</a></li>'
+  return HttpResponse(f'''
   <html>
     <body>
         <h1> Django </h1>
         <ol>
-          <li> routing </li>
-          <li> view </li>
-          <li> model </li>            
+          {ol}           
         </ol>
     </body>
-  <html>
+  </html>
   ''')
 
 def create(request):
   return HttpResponse("Create")
 
 def read(request, id):
-  return HttpResponse('Read!')
+  return HttpResponse('Read!'+ id)
