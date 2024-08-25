@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import redirect
 
 topics = [
   {'id':1, 'title': 'routing', 'body': 'Routing is ..'},
@@ -36,14 +37,24 @@ def index(request):
 
 @csrf_exempt
 def create(request):
-  article = '''
-  <form action="/create/" method="post">
-    <p><input type="text" name="title" placeholder="title"></input></p>
-    <p><textarea name="body" placeholder="body"></textarea></p>
-    <p><input type="submit"></input></p>
-  </form>
-'''
-  return HttpResponse(HTMLTemplate(article))
+  global nextId
+  if request.method == 'GET':
+    article = '''
+    <form action="/create/" method="post">
+      <p><input type="text" name="title" placeholder="title"></input></p>
+      <p><textarea name="body" placeholder="body"></textarea></p>
+      <p><input type="submit"></input></p>
+    </form>
+    '''
+    return HttpResponse(HTMLTemplate(article))
+  elif request.method == 'POST':
+    title = request.POST['title']
+    body = request.POST['body']
+    newTopic = {"id":nextId, "title":title, "body":body}
+    topics.append(newTopic)
+    nextId = next + 1
+    url = '/read/'+str(nextId)
+    return redirect(url)
 
 def read(request, id):
   return HttpResponse('Read!'+ id)
