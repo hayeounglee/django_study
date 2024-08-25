@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
 
+nextId = 4
 topics = [
   {'id':1, 'title': 'routing', 'body': 'Routing is ..'},
   {'id':2, 'title': 'view', 'body': 'View is ..'},
@@ -52,8 +53,8 @@ def create(request):
     body = request.POST['body']
     newTopic = {"id":nextId, "title":title, "body":body}
     topics.append(newTopic)
-    nextId = next + 1
     url = '/read/'+str(nextId)
+    nextId = nextId + 1
     return redirect(url)
 
 def read(request, id):
