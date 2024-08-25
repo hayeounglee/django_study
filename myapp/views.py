@@ -19,7 +19,9 @@ def HTMLTemplate(articleTage):
           {ol}           
         </ol>
         {articleTage}
-        <a href="create/">create</a>
+        <ul>
+          <li><a href="create/">create</a></li>
+        </ul>
     </body>
   </html>
   '''
@@ -33,7 +35,7 @@ def index(request):
 
 def create(request):
   article = '''
-  <form action="/create">
+  <form action="/create/">
     <p><input type="text" name="title" placeholder="title"></input></p>
     <p><textarea name="body" placeholder="body"></textarea></p>
     <p><input type="submit"></input></p>
